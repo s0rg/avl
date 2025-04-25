@@ -42,3 +42,8 @@ func (t *Tree[K, V]) Has(key K) (ok bool) {
 func (t *Tree[K, V]) Iter(cb func(K, V) bool) {
 	t.root.iterate(cb)
 }
+
+// Clear drops tree contents, by resetting root.
+func (t *Tree[K, V]) Clear() {
+	t.root = nil
+}
