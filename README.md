@@ -38,10 +38,10 @@ func main() {
 	tree := avl.New[int, string]()
 
     tree.Add(4, "four")
-	tree.Add(2, "two")
-	tree.Add(5, "five")
-	tree.Add(1, "one")
-	tree.Add(3, "three")
+    tree.Add(2, "two")
+    tree.Add(5, "five")
+    tree.Add(1, "one")
+    tree.Add(3, "three")
 
     tree.Del(1)
 
