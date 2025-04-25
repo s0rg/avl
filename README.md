@@ -3,12 +3,13 @@
 [![Go Version](https://img.shields.io/github/go-mod/go-version/s0rg/avl)](go.mod)
 [![Tag](https://img.shields.io/github/v/tag/s0rg/avl?sort=semver)](https://github.com/s0rg/avl/tags)
 
-<!--
 [![CI](https://github.com/s0rg/set/workflows/ci/badge.svg)](https://github.com/s0rg/set/actions?query=workflow%3Aci)
-[![Maintainability](https://api.codeclimate.com/v1/badges/aadc34c86aed23a42013/maintainability)](https://codeclimate.com/github/s0rg/set/maintainability)
+[![Go Report Card](https://goreportcard.com/badge/github.com/s0rg/avl)](https://goreportcard.com/report/github.com/s0rg/avl)
+[![Maintainability](https://qlty.sh/badges/717f9cfb-49e0-475d-bcb6-3efafa6823e4/maintainability.svg)](https://qlty.sh/gh/s0rg/projects/avl)
+
+<!--
 [![Test Coverage](https://api.codeclimate.com/v1/badges/aadc34c86aed23a42013/test_coverage)](https://codeclimate.com/github/s0rg/set/test_coverage)
 -->
-[![Go Report Card](https://goreportcard.com/badge/github.com/s0rg/avl)](https://goreportcard.com/report/github.com/s0rg/avl)
 ![Issues](https://img.shields.io/github/issues/s0rg/avl)
 
 # avl
