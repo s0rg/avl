@@ -6,7 +6,7 @@
 [![CI](https://github.com/s0rg/set/workflows/ci/badge.svg)](https://github.com/s0rg/set/actions?query=workflow%3Aci)
 [![Go Report Card](https://goreportcard.com/badge/github.com/s0rg/avl)](https://goreportcard.com/report/github.com/s0rg/avl)
 [![Maintainability](https://qlty.sh/badges/717f9cfb-49e0-475d-bcb6-3efafa6823e4/maintainability.svg)](https://qlty.sh/gh/s0rg/projects/avl)
-[![Code Coverage](https://qlty.sh/badges/717f9cfb-49e0-475d-bcb6-3efafa6823e4/test_coverage.svg)]
+[![Code Coverage](https://qlty.sh/badges/717f9cfb-49e0-475d-bcb6-3efafa6823e4/test_coverage.svg)](https://qlty.sh/gh/s0rg/projects/avl)
 ![Issues](https://img.shields.io/github/issues/s0rg/avl)
 
 # avl
@@ -27,13 +27,13 @@ Generic [AVL Tree](https://en.wikipedia.org/wiki/AVL_tree) implementation for go
 package main
 
 import (
-	"fmt"
+    "fmt"
 
-	"github.com/s0rg/avl"
+    "github.com/s0rg/avl"
 )
 
 func main() {
-	tree := avl.New[int, string]()
+    tree := avl.New[int, string]()
 
     tree.Add(4, "four")
     tree.Add(2, "two")
