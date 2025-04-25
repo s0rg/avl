@@ -39,15 +39,14 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ^1.24
-      - name: tests-only
-        if: ${{ github.event_name == 'pull_request' }}
+      - name: run-test
         run: make test
-      - name: test-coverage
+      - name: push-coverage
         if: ${{ github.event_name == 'push' }}
         uses: qltysh/qlty-action/coverage@v1
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: cover.out
+          files: ${{ github.workspace }}/cover.out
   codeql:
     if: github.event_name == 'push'
     needs: [lint, test]
