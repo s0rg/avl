@@ -6,10 +6,7 @@
 [![CI](https://github.com/s0rg/set/workflows/ci/badge.svg)](https://github.com/s0rg/set/actions?query=workflow%3Aci)
 [![Go Report Card](https://goreportcard.com/badge/github.com/s0rg/avl)](https://goreportcard.com/report/github.com/s0rg/avl)
 [![Maintainability](https://qlty.sh/badges/717f9cfb-49e0-475d-bcb6-3efafa6823e4/maintainability.svg)](https://qlty.sh/gh/s0rg/projects/avl)
-
-<!--
-[![Test Coverage](https://api.codeclimate.com/v1/badges/aadc34c86aed23a42013/test_coverage)](https://codeclimate.com/github/s0rg/set/test_coverage)
--->
+[![Code Coverage](https://qlty.sh/badges/717f9cfb-49e0-475d-bcb6-3efafa6823e4/test_coverage.svg)]
 ![Issues](https://img.shields.io/github/issues/s0rg/avl)
 
 # avl
