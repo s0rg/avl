@@ -53,6 +53,20 @@ func main() {
 }
 ```
 
+
+# benchmarks
+
+```
+cpu: AMD Ryzen 5 5500U with Radeon Graphics
+BenchmarkTree/AddInc-12             6420224       185.7 ns/op        47 B/op          0 allocs/op
+BenchmarkTree/AddDec-12             7155193       209.3 ns/op        47 B/op          0 allocs/op
+BenchmarkTree/Get-12                22292175           49.07 ns/op        0 B/op          0 allocs/op
+BenchmarkTree/Del-12                592457149           2.018 ns/op       0 B/op          0 allocs/op
+PASS
+ok      github.com/s0rg/avl 7.579s
+```
+
+
 # license
 
 MIT

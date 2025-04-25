@@ -97,4 +97,40 @@ func TestTreeCRUD(t *testing.T) {
 			break
 		}
 	}
+
+	tree.Clear()
+
+	if tree.Has(6) {
+		t.Fail()
+	}
+}
+
+func BenchmarkTree(b *testing.B) {
+	tree := avl.New[int, int]()
+
+	b.Run("AddInc", func(b *testing.B) {
+		for n := range b.N {
+			tree.Add(n, n)
+		}
+	})
+
+	tree.Clear()
+
+	b.Run("AddDec", func(b *testing.B) {
+		for n := range b.N {
+			tree.Add(b.N-n, n)
+		}
+	})
+
+	b.Run("Get", func(b *testing.B) {
+		for n := range b.N {
+			_, _ = tree.Get(n)
+		}
+	})
+
+	b.Run("Del", func(b *testing.B) {
+		for n := range b.N {
+			tree.Del(n)
+		}
+	})
 }
