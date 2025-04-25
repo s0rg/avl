@@ -19,6 +19,7 @@ Generic [AVL Tree](https://en.wikipedia.org/wiki/AVL_tree) implementation for go
 - generic
 - range-iter support
 - zero-dependency
+- zero-alloc
 - 100% test-covered
 
 # example
