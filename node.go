@@ -24,22 +24,22 @@ func (n *node[K, V]) add(key K, val V) (rv *node[K, V], changed bool) {
 		}, true
 	}
 
+	var a, b bool
+
 	switch cmp.Compare(n.key, key) {
 	case cmpBigger:
-		n.left, changed = n.left.add(key, val)
+		n.left, a = n.left.add(key, val)
 	case cmpLesser:
-		n.right, changed = n.right.add(key, val)
+		n.right, a = n.right.add(key, val)
 	default:
 		n.val = val
 
 		return n, false
 	}
 
-	tmp := changed
+	rv, b = n.rebalance()
 
-	rv, changed = n.rebalance()
-
-	return rv, changed || tmp
+	return rv, a || b
 }
 
 func (n *node[K, V]) del(key K) (rv *node[K, V], changed bool) {
@@ -47,30 +47,31 @@ func (n *node[K, V]) del(key K) (rv *node[K, V], changed bool) {
 		return nil, false
 	}
 
+	var a, b bool
+
 	switch cmp.Compare(n.key, key) {
 	case cmpBigger:
-		n.left, changed = n.left.del(key)
+		n.left, a = n.left.del(key)
 	case cmpLesser:
-		n.right, changed = n.right.del(key)
+		n.right, a = n.right.del(key)
 	default:
 		switch {
 		case n.left != nil && n.right != nil:
 			m := n.right.findSmallest()
 			n.key, n.val = m.key, m.val
-			n.right, changed = n.right.del(m.key)
+			n.right, a = n.right.del(m.key)
 		case n.left != nil:
-			n = n.left
+			n, a = n.left, true
 		case n.right != nil:
-			n = n.right
+			n, a = n.right, true
 		default:
 			return nil, false
 		}
 	}
 
-	tmp := changed
-	rv, changed = n.rebalance()
+	rv, b = n.rebalance()
 
-	return rv, changed || tmp
+	return rv, a || b
 }
 
 func (n *node[K, V]) find(key K) (rv *node[K, V], found bool) {
