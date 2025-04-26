@@ -1,6 +1,8 @@
 package avl
 
-import "cmp"
+import (
+	"cmp"
+)
 
 const (
 	cmpBigger = 1
@@ -59,7 +61,8 @@ func (n *node[K, V]) del(key K) (rv *node[K, V], changed bool) {
 		case n.left != nil && n.right != nil:
 			m := n.right.findSmallest()
 			n.key, n.val = m.key, m.val
-			n.right, a = n.right.del(m.key)
+			n.right, _ = n.right.del(m.key)
+			a = true
 		case n.left != nil:
 			n, a = n.left, true
 		case n.right != nil:

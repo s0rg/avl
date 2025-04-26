@@ -79,7 +79,7 @@ func TestTreeCRUD(t *testing.T) {
 	tree.Del(2)
 	tree.Del(6)
 
-	if tree.Len() != 5 {
+	if tree.Len() != 4 {
 		t.Fail()
 	}
 
