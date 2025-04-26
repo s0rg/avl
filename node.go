@@ -3,8 +3,8 @@ package avl
 import "cmp"
 
 const (
-	cBigger = 1
-	cLesser = -1
+	cmpBigger = 1
+	cmpLesser = -1
 )
 
 type node[K cmp.Ordered, V any] struct {
@@ -15,55 +15,62 @@ type node[K cmp.Ordered, V any] struct {
 	height int
 }
 
-func (n *node[K, V]) add(key K, val V) (rv *node[K, V]) {
+func (n *node[K, V]) add(key K, val V) (rv *node[K, V], changed bool) {
 	if n == nil {
 		return &node[K, V]{
 			key:    key,
 			val:    val,
 			height: 1,
-		}
+		}, true
 	}
 
 	switch cmp.Compare(n.key, key) {
-	case cBigger:
-		n.left = n.left.add(key, val)
-	case cLesser:
-		n.right = n.right.add(key, val)
+	case cmpBigger:
+		n.left, changed = n.left.add(key, val)
+	case cmpLesser:
+		n.right, changed = n.right.add(key, val)
 	default:
 		n.val = val
 
-		return
+		return n, false
 	}
 
-	return n.rebalance()
+	tmp := changed
+
+	rv, changed = n.rebalance()
+
+	return rv, changed || tmp
 }
 
-func (n *node[K, V]) del(key K) (rv *node[K, V]) {
+func (n *node[K, V]) del(key K) (rv *node[K, V], changed bool) {
 	if n == nil {
-		return nil
+		return nil, false
 	}
 
 	switch cmp.Compare(n.key, key) {
-	case cBigger:
-		n.left = n.left.del(key)
-	case cLesser:
-		n.right = n.right.del(key)
+	case cmpBigger:
+		n.left, changed = n.left.del(key)
+	case cmpLesser:
+		n.right, changed = n.right.del(key)
 	default:
 		switch {
 		case n.left != nil && n.right != nil:
 			m := n.right.findSmallest()
 			n.key, n.val = m.key, m.val
-			n.right = n.right.del(m.key)
+			n.right, changed = n.right.del(m.key)
 		case n.left != nil:
 			n = n.left
 		case n.right != nil:
 			n = n.right
 		default:
-			return nil
+			return nil, false
 		}
 	}
 
-	return n.rebalance()
+	tmp := changed
+	rv, changed = n.rebalance()
+
+	return rv, changed || tmp
 }
 
 func (n *node[K, V]) find(key K) (rv *node[K, V], found bool) {
@@ -72,9 +79,9 @@ func (n *node[K, V]) find(key K) (rv *node[K, V], found bool) {
 	}
 
 	switch cmp.Compare(n.key, key) {
-	case cBigger:
+	case cmpBigger:
 		return n.left.find(key)
-	case cLesser:
+	case cmpLesser:
 		return n.right.find(key)
 	}
 
@@ -129,25 +136,30 @@ func (n *node[K, V]) getHeight() (rv int) {
 	return n.height
 }
 
-func (n *node[K, V]) rebalance() (rv *node[K, V]) {
+func (n *node[K, V]) rebalance() (rv *node[K, V], changed bool) {
 	n.updateHeight()
 
-	switch b := n.left.getHeight() - n.right.getHeight(); b {
-	case -2:
-		if n.isLeftHeavy() {
-			n.right = n.right.rotateRight()
-		}
+	const (
+		heavyLeft  = 2
+		heavyRight = -2
+	)
 
-		return n.rotateLeft()
-	case 2:
+	switch n.left.getHeight() - n.right.getHeight() {
+	case heavyLeft:
 		if n.isRightHeavy() {
 			n.left = n.left.rotateLeft()
 		}
 
-		return n.rotateRight()
+		return n.rotateRight(), true
+	case heavyRight:
+		if n.isLeftHeavy() {
+			n.right = n.right.rotateRight()
+		}
+
+		return n.rotateLeft(), true
 	}
 
-	return n
+	return n, false
 }
 
 func (n *node[K, V]) findSmallest() (rv *node[K, V]) {

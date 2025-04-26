@@ -4,7 +4,8 @@ import "cmp"
 
 // AVL Tree.
 type Tree[K cmp.Ordered, V any] struct {
-	root *node[K, V]
+	root  *node[K, V]
+	count int
 }
 
 // New creates empty AVL tree.
@@ -14,17 +15,25 @@ func New[K cmp.Ordered, V any]() (rv *Tree[K, V]) {
 
 // Add places key and value into tree, if key exists - its value will be replaced.
 func (t *Tree[K, V]) Add(key K, value V) {
-	t.root = t.root.add(key, value)
+	var ok bool
+
+	if t.root, ok = t.root.add(key, value); ok {
+		t.count++
+	}
 }
 
 // Del removes key from tree.
 func (t *Tree[K, V]) Del(key K) {
-	t.root = t.root.del(key)
+	var ok bool
+
+	if t.root, ok = t.root.del(key); ok {
+		t.count--
+	}
 }
 
 // Get obtains value for specified key.
 func (t *Tree[K, V]) Get(key K) (rv V, ok bool) {
-	if node, ok := t.root.find(key); ok {
+	if node, found := t.root.find(key); found {
 		return node.val, true
 	}
 
@@ -45,5 +54,10 @@ func (t *Tree[K, V]) Iter(cb func(K, V) bool) {
 
 // Clear drops tree contents, by resetting root.
 func (t *Tree[K, V]) Clear() {
-	t.root = nil
+	t.root, t.count = nil, 0
+}
+
+// Len returns number of elements in tree.
+func (t *Tree[K, V]) Len() (rv int) {
+	return t.count
 }

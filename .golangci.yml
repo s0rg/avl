@@ -8,7 +8,6 @@ linters:
     - exhaustruct
     - intrange
     - ireturn
-    - mnd
     - nonamedreturns
     - varnamelen
   settings:
@@ -20,6 +19,8 @@ linters:
         - opinionated
         - diagnostic
         - style
+    cyclop:
+      max-complexity: 15
   exclusions:
     generated: lax
     presets:
@@ -30,6 +31,7 @@ linters:
     rules:
       - linters:
           - gosec
+          - cyclop
           - revive
         path: ._test\.go
     paths:

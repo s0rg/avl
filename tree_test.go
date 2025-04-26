@@ -79,6 +79,10 @@ func TestTreeCRUD(t *testing.T) {
 	tree.Del(2)
 	tree.Del(6)
 
+	if tree.Len() != 5 {
+		t.Fail()
+	}
+
 	if tree.Has(2) {
 		t.Fail()
 	}
@@ -88,6 +92,8 @@ func TestTreeCRUD(t *testing.T) {
 	if !tree.Has(6) {
 		t.Fail()
 	}
+
+	tree.Add(6, "6ix")
 
 	for range tree.Iter {
 	}
